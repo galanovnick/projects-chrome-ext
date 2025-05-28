@@ -1,0 +1,226 @@
+<html>
+<head>
+    <style>
+        body {
+            width: 750px;
+            margin: 0;
+            padding: 16px;
+            box-sizing: border-box;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        #task-names {
+            height: 150px;
+        }
+
+        .control-wrapper {
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* The switch - the box around the slider */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 18px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(16px);
+            -ms-transform: translateX(16px);
+            transform: translateX(16px);
+        }
+
+
+        .loading {
+            pointer-events: none;
+            user-select: none;
+            tab-index: -1;
+            opacity: 0.5;
+        }
+
+        .loading:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -30px;
+            margin-left: -30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            border: 5px solid grey;
+            border-top-color: black;
+            animation: loading 1s ease infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        #github-preview {
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px dashed rgba(0, 0, 0, .24);
+            border-radius: 6px;
+        }
+
+        #github-preview[hidden] {
+            display: none;
+        }
+
+        #github-search {
+            width: fit-content;
+            margin-top: 8px;
+        }
+
+        #message {
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            bottom: 0;
+            left: 0;
+            color: #DC3545;
+            font-weight: bold;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 12px;
+            width: calc(100% - 24px);
+            background: white;
+            border: 1px solid rgba(0, 0, 0, .24);
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        #message[hidden] {
+            display: none;
+        }
+
+        .close-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .close-icon::before,
+        .close-icon::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 2px;
+            background-color: #333; /* Change to white for dark backgrounds */
+            transform-origin: center;
+        }
+
+        .close-icon::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .close-icon::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="control-wrapper">
+        <label for="project-name">Select Project/Area</label>
+        <input id="project-name" list="projects" type="text" placeholder="Project/area name"/>
+        <datalist id="projects">
+        </datalist>
+    </div>
+
+    <div class="control-wrapper">
+        <label for="github-token">GitHub Personal Access Token (classic)</label>
+
+        <input type="password" id="github-token"/>
+
+        <button id="github-search">Find PR names (past month)</button>
+    </div>
+
+    <div id="github-preview" hidden>
+    </div>
+
+    <div class="control-wrapper">
+        <label for="task-names">Enter task names (JS array format) OR use GitHub integration above</label>
+        <textarea id="task-names"
+                  placeholder="Task names (JS string array)"></textarea>
+    </div>
+
+    <button id="create">Create tasks</button>
+
+    <div id="message" hidden>
+        <div id="message-outlet"></div>
+        <button id="close-warning" class="close-icon"></button>
+    </div>
+
+    <script src="popup.js"></script>
+    <script src="popup-github.js"></script>
+</body>
+</html>
