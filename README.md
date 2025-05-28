@@ -20,3 +20,5 @@
     - select all repositories you want to include
     - click `Add selected` to transfer PR names to the task names box
 - click `Create tasks`
+
+![img.png](img.png)
