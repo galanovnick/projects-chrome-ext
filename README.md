@@ -29,6 +29,6 @@
         - click `Add selected PR's to the box below` to transfer PR names to the task names box
 - click `Create tasks`
 
-![img_2.png](img_2.png)
+![img_2.png](assets/img_2.png)
 
-![img_1.png](img_1.png)
+![img_1.png](assets/img_1.png)
