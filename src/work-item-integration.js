@@ -214,8 +214,12 @@
 
     function getFromDate() {
         const currentDate = new Date();
-        const previousMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
+        const previousMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
 
-        return previousMonthDate.toISOString().split("T")[0];
+        const year = previousMonthDate.getFullYear();
+        const month = String(previousMonthDate.getMonth() + 1).padStart(2, "0");
+        const day = String(previousMonthDate.getDate()).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
     }
 })();
