@@ -186,6 +186,22 @@
         .close-icon::after {
             transform: translate(-50%, -50%) rotate(-45deg);
         }
+
+        button {
+            background: #fff;
+            margin: 0;
+            padding: 0 12px;
+            line-height: 24px;
+            height: 24px;
+            outline: none;
+            border: 1px solid rgba(0, 0, 0, .87);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #eee;
+        }
     </style>
 </head>
 <body>
@@ -201,7 +217,7 @@
 
         <input type="password" id="github-token"/>
 
-        <button id="github-search">Find PR names (past month)</button>
+        <button id="github-search">Find Pull Request names (past month)</button>
     </div>
 
     <div id="github-preview" hidden>
@@ -210,7 +226,7 @@
     <div class="control-wrapper">
         <label for="task-names">Enter task names (JS array format) OR use GitHub integration above</label>
         <textarea id="task-names"
-                  placeholder="Task names (JS string array)"></textarea>
+                  placeholder='["Task name 1", "Task name2"]'></textarea>
     </div>
 
     <button id="create">Create tasks</button>
