@@ -45,7 +45,7 @@
         chrome.scripting
             .executeScript({
                 target: {tabId},
-                files: ['create.js'],
+                files: ['src/create.js'],
             });
     }
 
