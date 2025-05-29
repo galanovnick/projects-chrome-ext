@@ -9,23 +9,23 @@
             font-size: 14px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 16px;
         }
 
         #task-names {
             height: 150px;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, .24);
+            border-radius: 4px;
         }
 
         .control-wrapper {
             display: flex;
             flex-direction: column;
             font-size: 14px;
-        }
-
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 8px;
         }
 
         /* The switch - the box around the slider */
@@ -82,6 +82,16 @@
             transform: translateX(16px);
         }
 
+        .toggle-container {
+            margin-top: 8px;
+        }
+
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
 
         .loading {
             pointer-events: none;
@@ -126,15 +136,26 @@
             padding: 12px;
             border: 1px dashed rgba(0, 0, 0, .24);
             border-radius: 6px;
+            margin-top: 8px;
+            margin-bottom: 8px;
         }
 
         #github-preview[hidden] {
             display: none;
         }
 
-        #github-search {
+        #github-search, #azure-search {
             width: fit-content;
-            margin-top: 8px;
+            margin-top: 12px;
+        }
+
+        input[type="text"], input[type="password"] {
+            height: 32px;
+            padding: 0 8px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, .24);
+            border-radius: 4px;
+            margin-bottom: 8px;
         }
 
         #message {
@@ -158,6 +179,10 @@
 
         #message[hidden] {
             display: none;
+        }
+
+        [hidden] {
+            display: none !important;
         }
 
         .close-icon {
@@ -197,6 +222,7 @@
             border: 1px solid rgba(0, 0, 0, .87);
             border-radius: 4px;
             cursor: pointer;
+            font-weight: 500;
         }
 
         button:hover {
@@ -219,11 +245,34 @@
     </div>
 
     <div class="control-wrapper">
+        <label>Select Source</label>
+        <div class="toggle-container">
+            <div class="toggle-option">
+                <label>GitHub</label>
+                <label class="switch">
+                    <input type="checkbox" id="source-toggle">
+                    <span class="slider"></span>
+                </label>
+                <label>Azure DevOps</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="github-controls" class="control-wrapper">
         <label for="github-token">GitHub Personal Access Token (classic)</label>
 
         <input type="password" id="github-token"/>
 
         <button id="github-search">Find Pull Request names (past month)</button>
+    </div>
+
+    <div id="azure-controls" class="control-wrapper" hidden>
+        <label for="azure-token">Azure DevOps Personal Access Token</label>
+
+        <input type="password" id="azure-token"/>
+
+        <button id="azure-search">Find from Azure DevOps (past month)</button>
     </div>
 
     <div id="github-preview" hidden>
@@ -235,7 +284,9 @@
                   placeholder='["Task name 1", "Task name2"]'></textarea>
     </div>
 
-    <button id="create">Create tasks</button>
+    <div class="control-wrapper">
+        <button id="create">Create tasks</button>
+    </div>
 
     <div id="message" hidden>
         <div id="message-outlet"></div>
@@ -244,5 +295,31 @@
 
     <script src="popup.js"></script>
     <script src="popup-github.js"></script>
+    <script src="popup-azure.js"></script>
+    <script>
+        // Script to handle toggling between GitHub and Azure DevOps controls
+        (function() {
+            const sourceToggle = document.getElementById("source-toggle");
+            const githubControls = document.getElementById("github-controls");
+            const azureControls = document.getElementById("azure-controls");
+
+            // Add event listeners to the toggle switches
+            sourceToggle.addEventListener("change", toggleSourceControls);
+
+            // Function to toggle between GitHub and Azure DevOps controls
+            function toggleSourceControls() {
+                if (!sourceToggle.checked) {
+                    githubControls.removeAttribute("hidden");
+                    azureControls.setAttribute("hidden", "");
+                } else {
+                    githubControls.setAttribute("hidden", "");
+                    azureControls.removeAttribute("hidden");
+                }
+            }
+
+            // Initialize the controls based on the default selection
+            toggleSourceControls();
+        })();
+    </script>
 </body>
 </html>
